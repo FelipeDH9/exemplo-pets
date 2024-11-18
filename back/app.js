@@ -85,53 +85,73 @@ app.post('/carros', upload.single('image'), (req, res) => {
 
 
 // Endpoint para atualizar um carro existente
-app.put('/carros/:id', (req, res) => {
+app.put('/carros/:id', upload.single('image'), (req, res) => {
     const { id } = req.params; // Extract ID from URL parameters
     const { modelo, marca, ano, valor, cor } = req.body; // Extract body data
-
+    const imagePath = req.file ? req.file.path : null;
     // Validate input
     if (!modelo || !marca || !ano || !valor || !cor) {
         res.status(400).json({ message: 'All fields (modelo, marca, ano, valor, cor) are required' });
         return;
     }
 
-    db.run(
-        'UPDATE Carros SET modelo = ?, marca = ?,ano = ?, valor =?, cor = ? WHERE id = ?',
-        [modelo, marca, ano, valor, cor, id],
-        function (err) {
-            if (err) {
-                console.error(`Error updating car with ID ${id}:`, err);
-                res.status(400).json({ error: err.message });
-                return;
+    if (imagePath == null){
+        db.run(
+            'UPDATE Carros SET modelo = ?, marca = ?,ano = ?, valor =?, cor = ? WHERE id = ?',
+            [modelo, marca, ano, valor, cor, id],
+            function (err) {
+                if (err) {
+                    console.error(`Error updating car with ID ${id}:`, err);
+                    res.status(400).json({ error: err.message });
+                    return;
+                }
+                if (this.changes === 0) {
+                    res.status(404).json({ message: 'Car not found' });
+                    return;
+                }
+                res.json({ message: `Car updated with ID ${id}` });
             }
-            if (this.changes === 0) {
-                res.status(404).json({ message: 'Car not found' });
-                return;
+        );
+    } else {
+        console.log(imagePath);
+        db.run(
+            'UPDATE Carros SET modelo = ?, marca = ?,ano = ?, valor =?, cor = ?, image = ? WHERE id = ?',
+            [modelo, marca, ano, valor, cor, imagePath, id],
+            function (err) {
+                if (err) {
+                    console.error(`Error updating car with ID ${id}:`, err);
+                    res.status(400).json({ error: err.message });
+                    return;
+                }
+                if (this.changes === 0) {
+                    res.status(404).json({ message: 'Car not found' });
+                    return;
+                }
+                res.json({ message: `Car updated with ID ${id}` });
             }
-            res.json({ message: `Car updated with ID ${id}` });
-        }
-    );
+        );
+    }
 });
 
 
 // Endpoint para deletar um carro existente
-app.delete('/carros/:id', (req, res) => {
+app.delete('/users/:id', (req, res) => {
     const { id } = req.params; // Extract ID from URL parameters
 
     db.run(
-        'DELETE FROM Carros WHERE id = ?',
+        'DELETE FROM Users WHERE id = ?',
         [id],
         function (err) {
             if (err) {
-                console.error(`Error deleting car with ID ${id}:`, err);
+                console.error(`Error deleting user with ID ${id}:`, err);
                 res.status(400).json({ error: err.message });
                 return;
             }
             if (this.changes === 0) {
-                res.status(404).json({ message: 'Car not found' });
+                res.status(404).json({ message: 'User not found' });
                 return;
             }
-            res.json({ message: `Car deleted with ID ${id}` });
+            res.json({ message: `User deleted with ID ${id}` });
         }
     );
 });
@@ -206,7 +226,26 @@ app.put('/users/:id', authenticateToken, async (req, res) => {
 });
 
 
+app.delete('/carros/:id', (req, res) => {
+    const { id } = req.params; // Extract ID from URL parameters
 
+    db.run(
+        'DELETE FROM Carros WHERE id = ?',
+        [id],
+        function (err) {
+            if (err) {
+                console.error(`Error deleting car with ID ${id}:`, err);
+                res.status(400).json({ error: err.message });
+                return;
+            }
+            if (this.changes === 0) {
+                res.status(404).json({ message: 'Car not found' });
+                return;
+            }
+            res.json({ message: `Car deleted with ID ${id}` });
+        }
+    );
+});
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body;

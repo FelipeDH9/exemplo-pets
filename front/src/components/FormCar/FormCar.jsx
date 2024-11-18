@@ -102,7 +102,7 @@ const FormCar = () => {
                         <label>Valor do carro:</label>
                         <input
                             type="number"
-                            step="1"
+                            step="100"
                             name="valor"
                             value={formData.valor}
                             onChange={handleChange}

@@ -64,10 +64,21 @@ const ListCar = () => {
 
     const updateCarro = async () => {
         try {
+            const formDataToSend = new FormData();
+            
+            formDataToSend.append('modelo', formData.modelo);
+            formDataToSend.append('marca', formData.marca);
+            formDataToSend.append('ano', formData.ano);
+            formDataToSend.append('valor', formData.valor);
+            formDataToSend.append('cor', formData.cor);
+
+            if (formData.image) {
+                formDataToSend.append('image', formData.image);
+            }
+    
             const response = await fetch(`${url}/${selectedCarro.id}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                body: formDataToSend,
             });
             if (!response.ok) {
                 throw new Error('Falha ao atualizar o Carro');
@@ -153,7 +164,7 @@ const ListCar = () => {
                     />
                     <input
                         type="number"
-                        step="1"
+                        step="100"
                         name="valor"
                         value={formData.valor}
                         onChange={handleInputChange}
