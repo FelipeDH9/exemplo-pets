@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import './FormUsers.css';
 
-const url = 'http://localhost:3000/users';
-
 const FormUsers = () => {
     const [formData, setFormData] = useState({
         username: '',
@@ -13,10 +11,11 @@ const FormUsers = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({...prevData,[name]: value}));
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
     };
-
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,11 +23,12 @@ const FormUsers = () => {
         formDataToSend?.append('username', formData.username);
         formDataToSend?.append('password', formData.password);
         formDataToSend?.append('email', formData.email);
-
+        
         try {
-            const response = await fetch(url, {
+            const response = await fetch('http://localhost:3000/users', {
                 method: 'POST',
-                body: formDataToSend,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
             });
 
             const data = await response.json();
@@ -39,20 +39,8 @@ const FormUsers = () => {
             } else {
                 setMessage(data.message || 'Registration failed');
             }
-            // if (!response.ok) {
-            //     throw new Error('Failed to add user');
-            // }
-
-            // const data = await response.json();
-
-            // alert(`User added successfully! ID: ${data.id}`);
-
-            // clearForm();
-
         } catch (error) {
             setMessage('An error occurred');
-            alert('Error adding user');
-
         }
     };
 

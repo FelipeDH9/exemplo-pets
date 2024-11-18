@@ -147,7 +147,7 @@ app.get('/users', authenticateToken, (req, res) => {
 
 app.post('/users', async (req, res) => {
     const { username, password, email } = req.body;
-    console.log(user);
+    console.log(username);
     if (!username || !password || !email) {
         return res.status(400).json({ message: 'All fields are required' });
     }
