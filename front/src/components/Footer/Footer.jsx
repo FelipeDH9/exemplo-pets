@@ -5,7 +5,7 @@ import './Footer.css';
 function Footer() {
   return (
     <footer>
-      <p>&copy; {new Date().getFullYear()} PetShop. Todos os direitos reservados.</p>
+      <p>&copy; {new Date().getFullYear()} MyCars. Todos os direitos reservados.</p>
       <div>
         <a href="https://www.facebook.com" target="_blank"> Facebook </a>
         <a href="https://www.instagram.com" target="_blank"> Instagram </a>

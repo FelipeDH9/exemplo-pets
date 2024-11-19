@@ -1,4 +1,4 @@
-.pet-table {
+.car-table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
@@ -8,22 +8,22 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.pet-table th, .pet-table td {
+.car-table th, .car-table td {
     border: 1px solid #ddd;
     padding: 12px;
     text-align: left;
 }
 
-.pet-table th {
+.car-table th {
     background-color: #f2f2f2;
     font-weight: bold;
 }
 
-.pet-table tr:nth-child(even) {
+.car-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.pet-table tr:hover {
+.car-table tr:hover {
     background-color: #f1f1f1;
 }
 
@@ -68,32 +68,32 @@ input {
 
 /* Para ajustar a largura das colunas ;) */
 
-.pet-table th:nth-child(1), .pet-table td:nth-child(1) {
-    width: 30%;
+.car-table th:nth-child(1), .car-table td:nth-child(1) {
+    width: 15%;
 }
 
-.pet-table th:nth-child(2), .pet-table td:nth-child(2) {
+.car-table th:nth-child(2), .car-table td:nth-child(2) {
+    width: 15%;
+}
+
+.car-table th:nth-child(3), .car-table td:nth-child(3) {
     width: 10%;
 }
 
-.pet-table th:nth-child(3), .pet-table td:nth-child(3) {
+.car-table th:nth-child(4), .car-table td:nth-child(4) {
     width: 10%;
 }
 
-.pet-table th:nth-child(4), .pet-table td:nth-child(4) {
+.car-table th:nth-child(5), .car-table td:nth-child(5) {
     width: 10%;
 }
 
-.pet-table th:nth-child(5), .pet-table td:nth-child(5) {
-    width: 10%;
-}
-
-.pet-table th:nth-child(6), .pet-table td:nth-child(6) {
+.car-table th:nth-child(6), .car-table td:nth-child(6) {
     width: 15%;
     text-align: center;
 }
 
-.pet-image {
+.car-image {
     width: 100%;
     max-width: 150px;
     height: auto;

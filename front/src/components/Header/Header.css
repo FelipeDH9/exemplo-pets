@@ -1,23 +1,36 @@
 
-header {
+.header {
   background-color: #333;
-  padding: 1rem;
+  /* padding: 1rem; */
+  
+  align-items: center;
+  justify-content: space-between;
 }
 
-nav ul {
+.header, .nav-container {
   display: flex;
-  list-style: none;
+  flex-direction: row;
+}
+
+.nav-container {
   gap: 1rem;
 }
 
-nav ul li a {
+.nav-item{
+  display: flex;
+  text-align: center;
+  
+  padding: 32px 8px;
+}
+
+.nav-item, a {
   color: white;
   text-decoration: none;
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
 }
 
-nav ul li a:hover {
-  text-decoration: underline;
-}
 
+ a:hover {
+  background-color: #414141;
+}
 

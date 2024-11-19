@@ -12,26 +12,23 @@ function Header({ onLogout }) {
     };
 
     return (
-        <header>
-            <nav>
-                <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/form-pet">Cadastro de Carros</Link></li>
-                    <li><Link to="/form-users">Cadastro de Usuários</Link></li>
-                    <li><Link to="/list-pet">Consulta Carros</Link></li>
-                    <li><Link to="/list-users">Consulta Usuários</Link></li>
-                    <li><Link to="/contact">Contato</Link></li>
-                    <li>
-                        {token ? (
-                            <button onClick={handleLogout}>Logout</button>
-                        ) : (
-                            <button onClick={() => navigate('/login')}>Login</button>
-                        )}
-                    </li>
-                </ul>
-            </nav>
-        </header>
+        <div className='header'>
+            <div className='nav-container'>
+                <Link to="/form-pet"><div className='nav-item'>Cadastro de Carros</div></Link>
+                <Link to="/form-users"><div className='nav-item'>Cadastro de Usuários</div></Link>
+                <Link to="/list-pet"><div className='nav-item'>Consulta Carros</div></Link>
+                <Link to="/list-users"><div className='nav-item'>Consulta Usuários</div></Link> 
+            </div>
+            <div className='nav-container'>
+                {token ? (
+                    <button onClick={handleLogout}>Logout</button>
+                ) : (
+                    <button onClick={() => navigate('/login')}>Login</button>
+                )}
+            </div>
+        </div>
     );
+    
 }
 
 export default Header;

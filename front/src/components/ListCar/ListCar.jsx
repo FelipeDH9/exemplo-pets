@@ -71,7 +71,7 @@ const ListCar = () => {
             formDataToSend.append('ano', formData.ano);
             formDataToSend.append('valor', formData.valor);
             formDataToSend.append('cor', formData.cor);
-
+    
             if (formData.image) {
                 formDataToSend.append('image', formData.image);
             }
@@ -80,30 +80,41 @@ const ListCar = () => {
                 method: 'PUT',
                 body: formDataToSend,
             });
+            
             if (!response.ok) {
                 throw new Error('Falha ao atualizar o Carro');
             }
-            setCarros(carros.map((carro) => (carro.id === selectedCarro.id ? formData : carro)));
+    
+            const updatedCarro = await response.json();
+    
+            setCarros(prevCarros => prevCarros.map(carro => {
+                if (carro.id === selectedCarro.id) {
+                    return { ...carro, ...formData, image: updatedCarro.imagePath }; 
+                }
+                return carro;
+            }));
+    
             setSelectedCarro(null);
         } catch (err) {
             setError(err.message);
         }
     };
+    
 
     if (loading) return <p>Carregando carros...</p>;
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div className="pet-list-container">
+        <div className="car-list-container">
             <h2>Lista de carros</h2>
             {carros.length === 0 ? (
-                <p>Nenhum pet encontrado :(</p>
+                <p>Nenhum carro encontrado :(</p>
             ) : (
-                <table className="pet-table">
+                <table className="car-table">
                     <thead>
                         <tr>
-                            <th>Modelo</th>
                             <th>Marca</th>
+                            <th>Modelo</th>
                             <th>Ano de fabricação</th>
                             <th>Valor do carro</th>
                             <th>Cor</th>
@@ -114,8 +125,8 @@ const ListCar = () => {
                     <tbody>
                         {carros.map((carro) => (
                             <tr key={carro.id}>
-                                <td>{carro.modelo}</td>
                                 <td>{carro.marca}</td>
+                                <td>{carro.modelo}</td>
                                 <td>{carro.ano}</td>
                                 <td>R${carro.valor}</td>
                                 <td>{carro.cor}</td>
@@ -124,7 +135,7 @@ const ListCar = () => {
                                         <img
                                             src={`http://localhost:3000/${carro.image}`}
                                             alt={`Imagem de ${carro.nome}`}
-                                            className="pet-image"
+                                            className="car-image"
                                         />
                                     )}
                                 </td>
@@ -143,17 +154,17 @@ const ListCar = () => {
                     <h3>Editar Carro</h3>
                     <input
                         type="text"
-                        name="modelo"
-                        value={formData.modelo}
-                        onChange={handleInputChange}
-                        placeholder="Modelo"
-                    />
-                    <input
-                        type="text"
                         name="marca"
                         value={formData.marca}
                         onChange={handleInputChange}
                         placeholder="Marca"
+                    />
+                    <input
+                        type="text"
+                        name="modelo"
+                        value={formData.modelo}
+                        onChange={handleInputChange}
+                        placeholder="Modelo"
                     />
                     <input
                         type="text"
